@@ -1,24 +1,143 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Todo List</title>
-  </head>
-  <body>
-    <h1>Todo List</h1>
-    <ul>
-      {% for todo in todos %}
-        <li>
-          <input type="checkbox" name="done" {% if todo['done'] %}checked{% endif %} onchange="this.form.submit()">
-          <span {% if todo['done'] %}style="text-decoration: line-through"{% endif %}>{{ todo['task'] }}</span>
-          <a href="{{ url_for('edit', index=loop.index0) }}">edit</a>
-          <a href="{{ url_for('delete', index=loop.index0) }}">delete</a>
-        </li>
-      {% endfor %}
-    </ul>
-    <form action="{{ url_for('add') }}" method="post">
-      <input type="text" name="todo">
-      <button type="submit">Add</button>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background-color:#1A488E; 
+            font-family: 'Quicksand', sans-serif;
+            margin: 0; 
+            padding: 0; 
+        }
+
+        li{
+            padding: 5px;
+            background-color: #97B2DE;
+            border-radius: 10px;
+            width: 420px;
+            height: 30px;
+            margin: 25px;
+            position: relative; 
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+        }
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            flex-direction: column; 
+        }
+
+        .todo-form {
+            margin-top: 20px; 
+            background-color: #092147; 
+            padding: 20px; 
+            border-radius: 10px;
+            width: 400px; 
+            text-align: center; 
+        }
+
+        .todo-form input[type="text"] {
+            font-family: 'Quicksand', sans-serif; 
+            display: inline-block; 
+            width: calc(100% - 110px); 
+            padding: 10px; 
+            border-radius: 5px; 
+            border: none; 
+            vertical-align: middle; 
+            margin-right: 5px; 
+        }
+
+        .todo-form button {
+            font-family: 'Quicksand', sans-serif; 
+            display: inline-block; 
+            width: 50px; 
+            padding: 10px; 
+            border-radius: 5px; 
+            border: none; 
+            background-color: #6f583d; 
+            color: white; 
+            cursor: pointer; 
+            vertical-align: middle; 
+        }
+
+
+        ul {
+            list-style-type: none; 
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #092147; 
+            padding: 20px; 
+            margin: 0; 
+            color: white; 
+            width: 400px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .edit-delete-icons {
+            position: absolute; 
+            right: 10px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            color: white; 
+        }
+
+        .edit-delete-icons a {
+            margin-left: 5px; 
+            display: inline-block; 
+        }
+
+        ul li input[type="checkbox"][name="done"]:checked + span {
+            text-decoration: line-through;
+        }
+
+    </style>
+</head>
+<body>
+<div class="center">
+    <h1>Todo's</h1>
+    <form action="{{ url_for('add') }}" method="post" class="todo-form" onsubmit="return addTask()">
+        <input type="text" id="taskInput" name="todo">
+        <button type="submit"><i class="fa-solid fa-plus"></i></button>
     </form>
-  </body>
+    <ul>
+        {% for todo in todos %}
+        <li>
+            <input type="checkbox" name="done" {% if todo['done'] %}checked{% endif %} onchange="this.form.submit()">
+            <span class="task">{{ todo['task'] }}</span>
+            <div class="edit-delete-icons">
+                <a href="{{ url_for('edit', index=loop.index0) }}"><i class="fa-solid fa-pen" style="color: #ffffff;"></i></a>
+                <a href="{{ url_for('delete', index=loop.index0) }}"><i class="fa-solid fa-x" style="color: #ffffff;"></i></a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<script>
+    function addTask() {
+        var taskInput = document.getElementById('taskInput').value.trim();
+        if (taskInput === '') {
+            alert('Please enter a task.');
+            return false; 
+        }
+
+        var tasks = document.querySelectorAll('ul li span');
+        for (var i = 0; i < tasks.length; i++) {
+            if (tasks[i].textContent.trim() === taskInput) {
+                alert('Task already exists.');
+                return false; 
+            }
+        }
+        return true; 
+    }
+</script>
+</body>
 </html>

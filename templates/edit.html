@@ -1,14 +1,85 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title>Edit Todo</title>
-  </head>
-  <body>
+    <style>
+        body {
+            background-color: #1A488E; 
+            font-family: 'Quicksand', sans-serif;
+            margin: 0; 
+            padding: 0; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            text-align: center;
+            background-color: #092147; 
+            padding: 20px; 
+            border-radius: 10px;
+            width: 400px; 
+        }
+
+        h1 {
+            background-color: #092147; 
+            padding: 20px; 
+            margin: 0; 
+            color: white; 
+            width: 400px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.edit {
+    margin-bottom: 20px; 
+}
+
+
+input[type="text"] {
+    font-family: 'Quicksand', sans-serif; 
+    display: block; 
+    width: calc(100% - 70px); 
+    padding: 10px; 
+    border-radius: 5px; 
+    border: none; 
+    margin-bottom: 10px; 
+}
+
+button {
+    font-family: 'Quicksand', sans-serif; 
+    width: auto; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    border: none; 
+    background-color: #6f583d; 
+    color: white; 
+    cursor: pointer; 
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+        .save-icon {
+            color: #ffffff; 
+        }
+    </style>
+</head>
+<body>
+<div class="edit">
     <h1>Edit Todo</h1>
     <form action="{{ url_for('edit', index=index) }}" method="post">
-      <input type="text" name="todo" value="{{ todo['task'] }}">
-      <button type="submit">Save</button>
+        <input type="text" name="todo" value="{{ todo['task'] }}">
+        <button type="submit"><i class="fa-solid fa-floppy-disk save-icon"></i> </button>
     </form>
-  </body>
+</div>
+</body>
 </html>
